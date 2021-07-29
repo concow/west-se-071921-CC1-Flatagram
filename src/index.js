@@ -12,9 +12,7 @@ const fgTitle = document.getElementById("fg-title")
 //Properties: id, title, likes, image, comments
 fetch(imageUrl)
 .then((res) => res.json())
-//.then(data => data);
 .then((data) => handleGram(data));
-//.then((data) => console.log(data) )
 
 function handleGram(data) {
     data.forEach((user) => {
@@ -22,14 +20,13 @@ function handleGram(data) {
         const fgImg2 = document.querySelector(".image-container")
         fgTitle.innerText = user.title 
         fgLikes.innerText = user.likes
-        fgComments.innerText.remove
+        //fgComments.remove() Removed wrong container
         fgImg.innerHTML
         console.log(fgImg)
         //append image?
-        //fgImg.append(fgImg)
     })
 }
-//1:cont: Replace Comments, Replace Image
+//1: Cont: Replace Comments, Replace Image
 
 //2: Click Event for Likes
 
