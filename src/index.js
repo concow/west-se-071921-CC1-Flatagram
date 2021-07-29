@@ -2,7 +2,7 @@ const gramUrl = "http://localhost:3000"
 const imageUrl ="http://localhost:3000/images"
 const commentUrl ="http://localhost:3000/comments"
 const imgCont = document.getElementsByClassName("image-container");
-//const fgImg = document.getElementById("fg-image src");
+const fgImg = document.getElementById("fg-image");
 //const fgImg2 = document.querySelector("#fg-image").value
 const fgLikes = document.getElementById("fg-likes");
 const likebutton = document.getElementById("fg-like-button");
@@ -16,13 +16,14 @@ fetch(imageUrl)
 
 function handleGram(data) {
     data.forEach((user) => {
-        const fgImg = document.getElementsByTagName("fg-image.src");
-        const fgImg2 = document.querySelector(".image-container")
+        console.log(fgImg.src)
         fgTitle.innerText = user.title 
-        fgLikes.innerText = user.likes
+        fgLikes.textContent = user.likes
+       // fgComments.innerHTML = ''           //removes comments
+        //console.log(user.likes)
+
         //fgComments.remove() Removed wrong container
-        fgImg.innerHTML
-        console.log(fgImg)
+        //fgImg.innerHTML
         //append image?
     })
 }
@@ -31,3 +32,11 @@ function handleGram(data) {
 //2: Click Event for Likes
 
 //3: Click event for comment submission
+fetch(commentUrl)
+.then((res) => res.json())
+.then(comments => handleComments(comments));
+//.then(comments => handleComments);
+
+function handleComments(comments) {
+    console.log(comments)
+}
