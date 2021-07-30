@@ -1,42 +1,53 @@
-const gramUrl = "http://localhost:3000"
-const imageUrl ="http://localhost:3000/images"
+//Properties: title, likes, image, comments
+const imageUrl = "http://localhost:3000/images/1"
 const commentUrl ="http://localhost:3000/comments"
-const imgCont = document.getElementsByClassName("image-container");
+const fgTitle = document.getElementById("fg-title");
 const fgImg = document.getElementById("fg-image");
-//const fgImg2 = document.querySelector("#fg-image").value
 const fgLikes = document.getElementById("fg-likes");
-const likebutton = document.getElementById("fg-like-button");
+const likeButton = document.getElementById("like-button");
 const fgComments = document.getElementById("fg-comments");
-const fgTitle = document.getElementById("fg-title")
+const fgCommentForm = document.getElementById("comment-form");
 
-//Properties: id, title, likes, image, comments
+let likes = 0;
+
+likeButton.addEventListener("click", () => {
+    likes += 1;
+    showLikes();
+});
+
+fgCommentForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    addComment(event.target.comment.value);
+    event.target.comment.value = '';
+});
+
 fetch(imageUrl)
 .then((res) => res.json())
-.then((data) => handleGram(data));
+.then(handleGram);
+//.then((data) => handleGram(data));
 
 function handleGram(data) {
-    data.forEach((user) => {
-        console.log(fgImg.src)
-        fgTitle.innerText = user.title 
-        fgLikes.textContent = user.likes
-       // fgComments.innerHTML = ''           //removes comments
-        //console.log(user.likes)
+    fgImg.src = data.image
+    fgTitle.innerText = data.title
+    likes = data.likes;
+    showLikes();
+    setComment(data.comments);
+    // fgLikeButton.addEventListener('click', () => {
+    //     fgLikes.innerText = `${data.likes++} likes`
 
-        //fgComments.remove() Removed wrong container
-        //fgImg.innerHTML
-        //append image?
-    })
+    // });
 }
-//1: Cont: Replace Comments, Replace Image
+function showLikes(likes) {
+    fgLikes.innerText = `${likes} likes` 
+};
 
-//2: Click Event for Likes
+function setComment(comments) {
+    fgComments.innerHTML = "";          //empty comments 
+    comments.forEach((comment) => addComment(comment.content));
+}
 
-//3: Click event for comment submission
-fetch(commentUrl)
-.then((res) => res.json())
-.then(comments => handleComments(comments));
-//.then(comments => handleComments);
-
-function handleComments(comments) {
-    console.log(comments)
+function addComment(comment) {
+    const li = document.createElement('li');
+    li.innerText = comment;
+    fgComments.append(li);
 }
